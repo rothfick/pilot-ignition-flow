@@ -166,10 +166,7 @@ const Portfolio = () => {
           </Card>
 
           {/* AI Headshot Pro */}
-          <Card
-            delay={0.32}
-            href="https://ai.studio/apps/4835761f-64b9-4adf-873b-dbf31c527e79"
-          >
+          <Card delay={0.32} href="/headshot">
             <div
               className="aspect-[4/3] w-full relative"
               style={{ background: "linear-gradient(135deg, #0a0a0a 0%, #1a1410 100%)" }}

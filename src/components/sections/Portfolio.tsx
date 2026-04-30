@@ -148,7 +148,7 @@ const Portfolio = () => {
             </div>
             <div className="p-6 flex items-center justify-between gap-4">
               <div className="min-w-0">
-                <h3 className="text-white font-light text-lg truncate">Noir Automation</h3>
+                <h3 className="text-white font-light text-lg truncate">Ink &amp; Blade Academy</h3>
                 <p className="text-xs uppercase tracking-[0.3em] text-white/40 mt-1 font-light">
                   SMM · System
                 </p>

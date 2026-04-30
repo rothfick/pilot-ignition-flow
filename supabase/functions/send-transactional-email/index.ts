@@ -96,6 +96,37 @@ Deno.serve(async (req) => {
   // Other templates (e.g. system-triggered) skip this check.
   const CAPTCHA_REQUIRED_TEMPLATES = new Set(['contact-form-notification'])
   if (CAPTCHA_REQUIRED_TEMPLATES.has(templateName)) {
+    // Server-side input validation — reCAPTCHA only protects the UI path,
+    // so we must validate templateData here against direct API abuse.
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const allowedKeys = new Set(['name', 'email', 'phone', 'message', 'submittedAt'])
+    const td = templateData as Record<string, unknown>
+
+    const invalid = (msg: string) =>
+      new Response(JSON.stringify({ error: msg }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+
+    for (const key of Object.keys(td)) {
+      if (!allowedKeys.has(key)) return invalid('Invalid input')
+    }
+
+    const name = typeof td.name === 'string' ? td.name.trim() : ''
+    const email = typeof td.email === 'string' ? td.email.trim() : ''
+    const phone = typeof td.phone === 'string' ? td.phone.trim() : ''
+    const message = typeof td.message === 'string' ? td.message.trim() : ''
+
+    if (!name || name.length > 100) return invalid('Invalid input')
+    if (!email || email.length > 255 || !emailRe.test(email)) return invalid('Invalid input')
+    if (!phone || phone.length > 30) return invalid('Invalid input')
+    if (!message || message.length > 2000) return invalid('Invalid input')
+    if (td.submittedAt !== undefined && (typeof td.submittedAt !== 'string' || td.submittedAt.length > 64)) {
+      return invalid('Invalid input')
+    }
+
+    templateData = { name, email, phone, message, ...(td.submittedAt ? { submittedAt: td.submittedAt } : {}) }
+
     if (!recaptchaSecret) {
       console.error('RECAPTCHA_SECRET_KEY not configured')
       return new Response(

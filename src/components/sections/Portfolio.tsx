@@ -152,10 +152,10 @@ const Portfolio = () => {
               <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_70%_70%,rgba(255,255,255,0.08),transparent_60%)]" />
               <InstagramMockup />
             </div>
-            <div className="p-6 flex items-center justify-between gap-4">
-              <div className="min-w-0">
-                <h3 className="text-white font-light text-lg truncate">Ink &amp; Blade Academy</h3>
-                <p className="text-xs uppercase tracking-[0.3em] text-white/40 mt-1 font-light">
+            <div className="p-6 flex items-center justify-between gap-3">
+              <div className="min-w-0 flex-1">
+                <h3 className="text-white font-light text-base sm:text-lg leading-tight">Ink &amp; Blade Academy</h3>
+                <p className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-white/40 mt-1 font-light">
                   SMM · System
                 </p>
               </div>

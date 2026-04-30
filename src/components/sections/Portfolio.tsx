@@ -5,7 +5,7 @@ import PhoneMockup from "@/components/portfolio/PhoneMockup";
 import EbookMockup from "@/components/portfolio/EbookMockup";
 import InstagramMockup from "@/components/portfolio/InstagramMockup";
 import EbookDialog from "@/components/EbookDialog";
-import { downloadEbook, EBOOK_FILE_NAME, EBOOK_PDF_URL } from "@/lib/ebookDownload";
+import { downloadEbook, EBOOK_DOWNLOAD_PAGE_URL } from "@/lib/ebookDownload";
 
 const baseCard =
   "group relative rounded-2xl overflow-hidden border border-white/[0.05] bg-white/[0.02] backdrop-blur-md transition-all";
@@ -106,8 +106,9 @@ const Portfolio = () => {
           {/* Czarny Zeszyt */}
           <Card delay={0.16} asDiv>
             <a
-              href={EBOOK_PDF_URL}
-              download={EBOOK_FILE_NAME}
+              href={EBOOK_DOWNLOAD_PAGE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={downloadEbook}
               className="block w-full text-left aspect-[4/3] relative cursor-pointer"
               style={{ background: "linear-gradient(160deg, #0a0a0a 0%, #18181b 100%)" }}
@@ -131,8 +132,9 @@ const Portfolio = () => {
                   }
                 />
                 <a
-                  href={EBOOK_PDF_URL}
-                  download={EBOOK_FILE_NAME}
+                  href={EBOOK_DOWNLOAD_PAGE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={downloadEbook}
                   className="btn-pill !py-2 !px-3 text-[10px] uppercase tracking-[0.2em]"
                 >

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { User } from "lucide-react";
+import founderPhoto from "@/assets/founder.jpg";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -59,7 +59,12 @@ const Hero = () => {
             <div className="absolute -inset-4 rounded-full border border-white/5" />
             <div className="absolute -inset-10 rounded-full border border-white/[0.03]" />
             <div className="rounded-full w-48 h-48 md:w-56 md:h-56 border border-white/10 bg-gradient-to-br from-white/[0.06] to-transparent backdrop-blur-md flex items-center justify-center overflow-hidden">
-              <User className="w-20 h-20 text-white/20" strokeWidth={1} />
+              <img
+                src={founderPhoto}
+                alt="Founder FlowPilot AI Lab"
+                className="w-full h-full object-cover"
+                loading="eager"
+              />
             </div>
             <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-black/60 backdrop-blur border border-white/10 text-[10px] tracking-[0.3em] uppercase text-white/60">
               Founder

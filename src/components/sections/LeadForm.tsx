@@ -1,7 +1,20 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+
+const RECAPTCHA_SITE_KEY = "6LejBNIsAAAAAMcWPrztQQwWdUEQNklT3-U_HCcs";
+
+declare global {
+  interface Window {
+    grecaptcha?: {
+      render: (el: HTMLElement, opts: Record<string, unknown>) => number;
+      reset: (id?: number) => void;
+      getResponse: (id?: number) => string;
+      ready: (cb: () => void) => void;
+    };
+  }
+}
 
 const inputCls =
   "w-full bg-transparent border-b border-white/15 py-4 px-0 text-white font-light placeholder:text-white/30 focus:border-white outline-none transition-colors";
@@ -9,6 +22,31 @@ const inputCls =
 const LeadForm = () => {
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
+  const captchaRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const tryRender = () => {
+      if (
+        window.grecaptcha &&
+        typeof window.grecaptcha.render === "function" &&
+        captchaRef.current &&
+        widgetIdRef.current === null
+      ) {
+        try {
+          widgetIdRef.current = window.grecaptcha.render(captchaRef.current, {
+            sitekey: RECAPTCHA_SITE_KEY,
+            theme: "dark",
+          });
+        } catch (err) {
+          // already rendered or script not fully ready
+        }
+      }
+    };
+    const interval = window.setInterval(tryRender, 300);
+    tryRender();
+    return () => window.clearInterval(interval);
+  }, []);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,6 +60,20 @@ const LeadForm = () => {
 
     if (!name || !email || !phone || !message) return;
 
+    const captchaToken =
+      window.grecaptcha && widgetIdRef.current !== null
+        ? window.grecaptcha.getResponse(widgetIdRef.current)
+        : "";
+
+    if (!captchaToken) {
+      toast({
+        title: "Potwierdź, że nie jesteś robotem",
+        description: "Zaznacz pole reCAPTCHA przed wysłaniem.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setSubmitting(true);
     try {
       const id =
@@ -33,6 +85,7 @@ const LeadForm = () => {
         body: {
           templateName: "contact-form-notification",
           idempotencyKey: `contact-form-${id}`,
+          captchaToken,
           templateData: {
             name,
             email,
@@ -47,12 +100,18 @@ const LeadForm = () => {
 
       setSent(true);
       form.reset();
+      if (window.grecaptcha && widgetIdRef.current !== null) {
+        window.grecaptcha.reset(widgetIdRef.current);
+      }
       toast({
         title: "Wiadomość wysłana",
         description: "Odezwiemy się w ciągu 24 godzin.",
       });
     } catch (err) {
       console.error("Contact form error:", err);
+      if (window.grecaptcha && widgetIdRef.current !== null) {
+        window.grecaptcha.reset(widgetIdRef.current);
+      }
       toast({
         title: "Coś poszło nie tak",
         description: "Spróbuj ponownie za chwilę.",
@@ -124,7 +183,10 @@ const LeadForm = () => {
             maxLength={1000}
             className={`${inputCls} resize-none`}
           />
-          <div className="pt-10">
+          <div className="pt-8 flex justify-center">
+            <div ref={captchaRef} />
+          </div>
+          <div className="pt-6">
             <button
               type="submit"
               disabled={submitting}

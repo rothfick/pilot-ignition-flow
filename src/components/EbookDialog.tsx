@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Download, Eye, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -36,10 +35,8 @@ const EbookDialog = ({ trigger }: Props) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="max-w-5xl w-[95vw] h-[90vh] p-0 bg-black border border-white/10 rounded-2xl overflow-hidden flex flex-col">
-        <VisuallyHidden>
-          <DialogTitle>Czarny Zeszyt — podgląd e-booka</DialogTitle>
-          <DialogDescription>Podgląd PDF z możliwością pobrania.</DialogDescription>
-        </VisuallyHidden>
+        <DialogTitle className="sr-only">Czarny Zeszyt — podgląd e-booka</DialogTitle>
+        <DialogDescription className="sr-only">Podgląd PDF z możliwością pobrania.</DialogDescription>
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 shrink-0">
           <div>
             <p className="text-[10px] tracking-[0.4em] uppercase text-white/40 font-light">

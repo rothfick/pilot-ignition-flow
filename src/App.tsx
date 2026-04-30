@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound.tsx";
 import AppPreview from "./pages/AppPreview.tsx";
 import Unsubscribe from "./pages/Unsubscribe.tsx";
 import Headshot from "./pages/Headshot.tsx";
+import Reel from "./pages/Reel.tsx";
 import AppLayout from "./app/components/AppLayout";
 import Login from "./app/screens/Login";
 import Onboarding from "./app/screens/Onboarding";
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/app-install" element={<AppPreview />} />
           <Route path="/headshot" element={<Headshot />} />
+          <Route path="/reel" element={<Reel />} />
           <Route path="/app" element={<AppLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="login" element={<Login />} />

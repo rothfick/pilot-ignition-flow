@@ -5,6 +5,7 @@ import PhoneMockup from "@/components/portfolio/PhoneMockup";
 import EbookMockup from "@/components/portfolio/EbookMockup";
 import InstagramMockup from "@/components/portfolio/InstagramMockup";
 import HeadshotMockup from "@/components/portfolio/HeadshotMockup";
+import ReelMockup from "@/components/portfolio/ReelMockup";
 import EbookDialog from "@/components/EbookDialog";
 import { downloadEbook, EBOOK_DOWNLOAD_PAGE_URL } from "@/lib/ebookDownload";
 
@@ -175,6 +176,17 @@ const Portfolio = () => {
               <HeadshotMockup />
             </div>
             <Footer title="AI Headshot Pro" tag="AI · Generative" />
+          </Card>
+
+          {/* FlowPilot Reel — Wideo */}
+          <Card delay={0.4} href="/reel">
+            <div
+              className="aspect-[4/3] w-full relative"
+              style={{ background: "linear-gradient(135deg, #0a0a0a 0%, #1a1410 100%)" }}
+            >
+              <ReelMockup />
+            </div>
+            <Footer title="FlowPilot Reel" tag="Wideo · Reel 2026" />
           </Card>
         </div>
       </div>

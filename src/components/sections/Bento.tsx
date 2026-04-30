@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
-import { Instagram, Video, ArrowUpRight, BookOpen } from "lucide-react";
+import { Instagram, Video, ArrowUpRight, BookOpen, Download } from "lucide-react";
+import { Link } from "react-router-dom";
+import PhoneMockup from "@/components/PhoneMockup";
 
 const cardBase =
   "glass-card p-6 sm:p-8 relative overflow-hidden group transition-colors duration-300 hover:border-white/20";
@@ -71,22 +73,25 @@ const Bento = () => {
             transition={{ type: "spring", stiffness: 300 }}
             className={cardBase}
           >
-            <h3 className="text-2xl font-bold text-white mb-2">
-              Aplikacje Mobilne
-            </h3>
-            <p className="text-[#94A3B8] text-sm mb-8">
+            <div className="flex items-start justify-between mb-2">
+              <h3 className="text-2xl font-bold text-white">
+                Aplikacje Mobilne
+              </h3>
+              <ArrowUpRight className="w-5 h-5 text-[#00E5FF] group-hover:rotate-45 transition-transform" />
+            </div>
+            <p className="text-[#94A3B8] text-sm mb-6">
               Natywny feel. Skala produktu.
             </p>
 
-            {/* Phone */}
-            <div className="flex justify-center">
-              <div className="relative w-32 h-56 rounded-[2rem] border-2 border-white/20 bg-[#09090B] p-2 shadow-[0_0_60px_-10px_rgba(255,93,1,0.5)]">
-                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-1.5 rounded-full bg-white/20" />
-                <div className="w-full h-full rounded-[1.5rem] bg-gradient-to-br from-[#FF5D01]/40 via-[#FF5D01]/10 to-transparent flex items-center justify-center">
-                  <div className="w-8 h-8 rounded-lg bg-[#FF5D01] shadow-[0_0_30px_rgba(255,93,1,0.8)]" />
-                </div>
-              </div>
-            </div>
+            <PhoneMockup />
+
+            <Link
+              to="/app"
+              className="mt-6 flex items-center justify-center gap-2 w-full rounded-xl bg-white/5 border border-white/10 hover:border-[#FF5D01]/50 hover:bg-[#FF5D01]/5 transition-colors py-3 text-sm font-semibold"
+            >
+              <Download className="w-4 h-4 text-[#FF5D01]" />
+              Pobierz demo PWA
+            </Link>
           </motion.div>
 
           {/* Card 3 — SMM */}

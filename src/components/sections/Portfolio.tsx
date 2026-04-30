@@ -4,6 +4,7 @@ import InkbladeMockup from "@/components/portfolio/InkbladeMockup";
 import PhoneMockup from "@/components/portfolio/PhoneMockup";
 import EbookMockup from "@/components/portfolio/EbookMockup";
 import InstagramMockup from "@/components/portfolio/InstagramMockup";
+import HeadshotMockup from "@/components/portfolio/HeadshotMockup";
 import EbookDialog from "@/components/EbookDialog";
 import { downloadEbook, EBOOK_DOWNLOAD_PAGE_URL } from "@/lib/ebookDownload";
 
@@ -162,6 +163,21 @@ const Portfolio = () => {
                 <ArrowUpRight className="w-5 h-5 group-hover:rotate-45 transition-transform" strokeWidth={1.5} />
               </div>
             </div>
+          </Card>
+
+          {/* AI Headshot Pro */}
+          <Card
+            delay={0.32}
+            href="https://ai.studio/apps/4835761f-64b9-4adf-873b-dbf31c527e79"
+          >
+            <div
+              className="aspect-[4/3] w-full relative"
+              style={{ background: "linear-gradient(135deg, #0a0a0a 0%, #1a1410 100%)" }}
+            >
+              <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_70%,rgba(245,158,11,0.18),transparent_60%)]" />
+              <HeadshotMockup />
+            </div>
+            <Footer title="AI Headshot Pro" tag="AI · Generative" />
           </Card>
         </div>
       </div>

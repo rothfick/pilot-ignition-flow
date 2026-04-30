@@ -56,8 +56,8 @@ const Footer = ({
 }) => (
   <div className="p-6 flex items-center justify-between gap-3">
     <div className="min-w-0 flex-1">
-      <h3 className="text-white font-light text-base sm:text-lg leading-tight">{title}</h3>
-      <p className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-white/40 mt-1 font-light">
+      <h3 className="text-white font-light text-base leading-tight">{title}</h3>
+      <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 mt-1.5 font-light">
         {tag}
       </p>
     </div>
@@ -119,9 +119,9 @@ const Portfolio = () => {
               <EbookMockup />
             </a>
             <div className="p-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="min-w-0">
-                <h3 className="text-white font-light text-base sm:text-lg leading-tight">Czarny Zeszyt</h3>
-                <p className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-white/40 mt-1 font-light">
+              <div className="min-w-0 flex-1">
+                <h3 className="text-white font-light text-base leading-tight">Czarny Zeszyt</h3>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 mt-1.5 font-light">
                   E-book · Premium
                 </p>
               </div>
@@ -154,8 +154,8 @@ const Portfolio = () => {
             </div>
             <div className="p-6 flex items-center justify-between gap-3">
               <div className="min-w-0 flex-1">
-                <h3 className="text-white font-light text-base sm:text-lg leading-tight">Ink &amp; Blade Academy</h3>
-                <p className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-white/40 mt-1 font-light">
+                <h3 className="text-white font-light text-base leading-tight">Ink &amp; Blade Academy</h3>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 mt-1.5 font-light">
                   SMM · System
                 </p>
               </div>

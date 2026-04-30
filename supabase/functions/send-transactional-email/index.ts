@@ -253,6 +253,15 @@ Deno.serve(async (req) => {
         email: submitterEmail,
         template_name: templateName,
       })
+
+      // Opportunistic cleanup of rows older than 24h (~1% of requests)
+      if (Math.random() < 0.01) {
+        const dayAgo = new Date(now - 24 * 60 * 60 * 1000).toISOString()
+        await rlSupabase
+          .from('email_rate_limit_attempts')
+          .delete()
+          .lt('created_at', dayAgo)
+      }
     } catch (err) {
       console.error('Rate limit check failed — allowing request', err)
     }

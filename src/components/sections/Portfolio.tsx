@@ -5,7 +5,7 @@ import PhoneMockup from "@/components/portfolio/PhoneMockup";
 import EbookMockup from "@/components/portfolio/EbookMockup";
 import InstagramMockup from "@/components/portfolio/InstagramMockup";
 import EbookDialog from "@/components/EbookDialog";
-import { downloadEbook } from "@/lib/ebookDownload";
+import { EBOOK_DOWNLOAD_PAGE_URL } from "@/lib/ebookDownload";
 
 const baseCard =
   "group relative rounded-2xl overflow-hidden border border-white/[0.05] bg-white/[0.02] backdrop-blur-md transition-all";
@@ -128,13 +128,15 @@ const Portfolio = () => {
                     </button>
                   }
                 />
-                <button
-                  type="button"
-                  onClick={downloadEbook}
+                <a
+                  href={EBOOK_DOWNLOAD_PAGE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(event) => event.stopPropagation()}
                   className="btn-pill !py-2 !px-3 text-[10px] uppercase tracking-[0.2em]"
                 >
                   <Download className="w-3 h-3" /> Pobierz
-                </button>
+                </a>
               </div>
             </div>
           </Card>

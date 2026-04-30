@@ -33,7 +33,7 @@ const InstagramMockup = () => {
         </span>
       </div>
 
-      <div className="grid grid-cols-3 gap-1.5 flex-1 min-h-0">
+      <div className="grid grid-cols-3 gap-1.5 flex-1 min-h-0 my-auto content-center">
         {POSTS.map((post, i) => (
           <a
             key={i}
@@ -41,7 +41,7 @@ const InstagramMockup = () => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="relative rounded-md overflow-hidden border border-white/[0.06] bg-zinc-900 group/tile block aspect-[4/5]"
+            className="relative rounded-md overflow-hidden border border-white/[0.06] bg-zinc-900 group/tile block aspect-square self-center"
           >
             <img
               src={post.image}

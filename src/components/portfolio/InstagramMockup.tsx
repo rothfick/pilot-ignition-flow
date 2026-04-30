@@ -4,9 +4,9 @@ import { Instagram, ArrowUpRight } from "lucide-react";
 // Replace with real post URLs from @inkandblade.academy
 // (Right-click any IG post → "Copy link")
 const POSTS: string[] = [
-  "https://www.instagram.com/inkandblade.academy/",
-  "https://www.instagram.com/inkandblade.academy/",
-  "https://www.instagram.com/inkandblade.academy/",
+  "https://www.instagram.com/p/DXvHj2_FOsC/",
+  "https://www.instagram.com/p/DXvNGX1FG6l/",
+  "https://www.instagram.com/p/DXvNhdbFAcF/",
 ];
 
 declare global {

@@ -8,6 +8,25 @@ import EbookDialog from "@/components/EbookDialog";
 
 const PDF_URL = "/ebook/czarny-zeszyt.pdf";
 
+const downloadEbook = async (e: React.MouseEvent) => {
+  e.preventDefault();
+  e.stopPropagation();
+  try {
+    const res = await fetch(PDF_URL);
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Czarny-Zeszyt.pdf";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  } catch {
+    window.open(PDF_URL, "_blank");
+  }
+};
+
 const baseCard =
   "group relative rounded-2xl overflow-hidden border border-white/[0.05] bg-white/[0.02] backdrop-blur-md transition-all";
 
@@ -129,13 +148,13 @@ const Portfolio = () => {
                     </button>
                   }
                 />
-                <a
-                  href={PDF_URL}
-                  download="Czarny-Zeszyt.pdf"
+                <button
+                  type="button"
+                  onClick={downloadEbook}
                   className="btn-pill !py-2 !px-3 text-[10px] uppercase tracking-[0.2em]"
                 >
                   <Download className="w-3 h-3" /> Pobierz
-                </a>
+                </button>
               </div>
             </div>
           </Card>

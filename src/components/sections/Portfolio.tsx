@@ -92,7 +92,7 @@ const Portfolio = () => {
             <div className="aspect-[4/3] w-full relative bg-zinc-950">
               <InkbladeMockup />
             </div>
-            <Footer title="Inkblade Academy" tag="WWW · Identyfikacja" />
+            <Footer title="Ink & Blade Academy" tag="WWW · Identyfikacja" />
           </Card>
 
           {/* FlowPilot Command */}

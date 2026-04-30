@@ -5,27 +5,7 @@ import PhoneMockup from "@/components/portfolio/PhoneMockup";
 import EbookMockup from "@/components/portfolio/EbookMockup";
 import InstagramMockup from "@/components/portfolio/InstagramMockup";
 import EbookDialog from "@/components/EbookDialog";
-
-const PDF_URL = "/ebook/czarny-zeszyt.pdf";
-
-const downloadEbook = async (e: React.MouseEvent) => {
-  e.preventDefault();
-  e.stopPropagation();
-  try {
-    const res = await fetch(PDF_URL);
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "Czarny-Zeszyt.pdf";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  } catch {
-    window.open(PDF_URL, "_blank");
-  }
-};
+import { downloadEbook } from "@/lib/ebookDownload";
 
 const baseCard =
   "group relative rounded-2xl overflow-hidden border border-white/[0.05] bg-white/[0.02] backdrop-blur-md transition-all";

@@ -2,27 +2,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Download, Eye, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const PDF_URL = "/ebook/czarny-zeszyt.pdf";
-
-const downloadPdf = async (e: React.MouseEvent) => {
-  e.preventDefault();
-  e.stopPropagation();
-  try {
-    const res = await fetch(PDF_URL);
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "Czarny-Zeszyt.pdf";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  } catch {
-    window.open(PDF_URL, "_blank");
-  }
-};
+import { EBOOK_PDF_URL, downloadEbook } from "@/lib/ebookDownload";
 
 type Props = {
   trigger: React.ReactNode;
@@ -34,7 +14,7 @@ const EbookDialog = ({ trigger }: Props) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="max-w-5xl w-[95vw] h-[90vh] p-0 bg-black border border-white/10 rounded-2xl overflow-hidden flex flex-col">
+      <DialogContent hideCloseButton className="max-w-5xl w-[95vw] h-[90vh] p-0 bg-black border border-white/10 rounded-2xl overflow-hidden flex flex-col">
         <DialogTitle className="sr-only">Czarny Zeszyt — podgląd e-booka</DialogTitle>
         <DialogDescription className="sr-only">Podgląd PDF z możliwością pobrania.</DialogDescription>
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 shrink-0">
@@ -49,7 +29,7 @@ const EbookDialog = ({ trigger }: Props) => {
           <div className="flex items-center gap-3">
             <button
               type="button"
-              onClick={downloadPdf}
+              onClick={downloadEbook}
               className="btn-pill !py-2 !px-4 text-xs uppercase tracking-[0.2em]"
             >
               <Download className="w-3.5 h-3.5" />
@@ -72,7 +52,7 @@ const EbookDialog = ({ trigger }: Props) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.4 }}
-                data={`${PDF_URL}#view=FitH&toolbar=1`}
+                data={`${EBOOK_PDF_URL}#view=FitH&toolbar=1`}
                 type="application/pdf"
                 aria-label="Czarny Zeszyt — podgląd"
                 className="absolute inset-0 w-full h-full"
@@ -82,7 +62,7 @@ const EbookDialog = ({ trigger }: Props) => {
                     Twoja przeglądarka nie wspiera podglądu PDF w oknie.
                     Pobierz plik, aby zobaczyć Czarny Zeszyt.
                   </p>
-                  <button type="button" onClick={downloadPdf} className="btn-pill">
+                  <button type="button" onClick={downloadEbook} className="btn-pill">
                     <Download className="w-4 h-4" /> Pobierz PDF
                   </button>
                 </div>
@@ -106,7 +86,7 @@ export const EbookActions = () => (
     />
     <button
       type="button"
-      onClick={downloadPdf}
+      onClick={downloadEbook}
       className="btn-pill !py-2 !px-4 text-[10px] uppercase tracking-[0.25em]"
     >
       <Download className="w-3 h-3" /> Pobierz

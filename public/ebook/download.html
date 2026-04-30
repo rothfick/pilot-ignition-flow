@@ -50,13 +50,41 @@
   <body>
     <main>
       <h1>15 brutalnych zasad budowania dochodowego studia</h1>
-      <p>Pobieranie powinno rozpocząć się automatycznie. Jeśli nie, użyj przycisku poniżej.</p>
+      <p id="status">Przygotowuję pobieranie. Jeśli nie rozpocznie się automatycznie, użyj przycisku poniżej.</p>
       <a id="download" href="/ebook/15-brutalnych-zasad-budowania-dochodowego-studia.pdf" download="15-brutalnych-zasad-budowania-dochodowego-studia.pdf">Pobierz PDF</a>
     </main>
     <script>
-      window.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("download")?.click();
+      const pdfUrl = "/ebook/15-brutalnych-zasad-budowania-dochodowego-studia.pdf";
+      const fileName = "15-brutalnych-zasad-budowania-dochodowego-studia.pdf";
+
+      async function startDownload() {
+        const status = document.getElementById("status");
+
+        try {
+          const response = await fetch(pdfUrl, { cache: "no-store" });
+          if (!response.ok) throw new Error("PDF unavailable");
+
+          const blob = await response.blob();
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = fileName;
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          setTimeout(() => URL.revokeObjectURL(url), 1500);
+          if (status) status.textContent = "Pobieranie zostało uruchomione.";
+        } catch {
+          if (status) status.textContent = "Kliknij przycisk poniżej, aby pobrać PDF.";
+        }
+      }
+
+      document.getElementById("download")?.addEventListener("click", (event) => {
+        event.preventDefault();
+        startDownload();
       });
+
+      window.addEventListener("DOMContentLoaded", startDownload);
     </script>
   </body>
 </html>

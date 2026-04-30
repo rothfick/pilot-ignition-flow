@@ -105,14 +105,16 @@ const Portfolio = () => {
 
           {/* Czarny Zeszyt */}
           <Card delay={0.16} asDiv>
-            <EbookDialog
-              trigger={
-                <button className="block w-full text-left aspect-[4/3] relative cursor-pointer" style={{ background: "linear-gradient(160deg, #0a0a0a 0%, #18181b 100%)" }}>
-                  <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1),transparent_60%)]" />
-                  <EbookMockup />
-                </button>
-              }
-            />
+            <a
+              href={EBOOK_PDF_URL}
+              download={EBOOK_FILE_NAME}
+              onClick={downloadEbook}
+              className="block w-full text-left aspect-[4/3] relative cursor-pointer"
+              style={{ background: "linear-gradient(160deg, #0a0a0a 0%, #18181b 100%)" }}
+            >
+              <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1),transparent_60%)]" />
+              <EbookMockup />
+            </a>
             <div className="p-6 flex items-center justify-between gap-4">
               <div className="min-w-0">
                 <h3 className="text-white font-light text-lg truncate">Czarny Zeszyt</h3>

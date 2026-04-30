@@ -15,6 +15,7 @@ import type { TemplateEntry } from './registry.ts'
 interface ContactFormNotificationProps {
   name?: string
   email?: string
+  phone?: string
   message?: string
   submittedAt?: string
 }
@@ -22,6 +23,7 @@ interface ContactFormNotificationProps {
 const ContactFormNotificationEmail = ({
   name,
   email,
+  phone,
   message,
   submittedAt,
 }: ContactFormNotificationProps) => (
@@ -43,6 +45,11 @@ const ContactFormNotificationEmail = ({
 
           <Text style={label}>E-mail</Text>
           <Text style={value}>{email || '—'}</Text>
+
+          <Hr style={divider} />
+
+          <Text style={label}>Telefon</Text>
+          <Text style={value}>{phone || '—'}</Text>
 
           <Hr style={divider} />
 
@@ -78,6 +85,7 @@ export const template = {
   previewData: {
     name: 'Jan Kowalski',
     email: 'jan@example.com',
+    phone: '+48 600 000 000',
     message: 'Cześć, chciałbym porozmawiać o wdrożeniu AI w mojej firmie.',
     submittedAt: new Date().toLocaleString('pl-PL'),
   },

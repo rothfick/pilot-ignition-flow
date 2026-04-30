@@ -17,9 +17,10 @@ const LeadForm = () => {
     const fd = new FormData(form);
     const name = String(fd.get("name") || "").trim();
     const email = String(fd.get("email") || "").trim();
+    const phone = String(fd.get("phone") || "").trim();
     const message = String(fd.get("message") || "").trim();
 
-    if (!name || !email || !message) return;
+    if (!name || !email || !phone || !message) return;
 
     setSubmitting(true);
     try {
@@ -35,6 +36,7 @@ const LeadForm = () => {
           templateData: {
             name,
             email,
+            phone,
             message,
             submittedAt: new Date().toLocaleString("pl-PL"),
           },
@@ -103,6 +105,15 @@ const LeadForm = () => {
             placeholder="E-mail"
             required
             maxLength={255}
+            className={inputCls}
+          />
+          <input
+            name="phone"
+            type="tel"
+            placeholder="Numer telefonu"
+            required
+            maxLength={30}
+            pattern="[0-9+\s\-()]{6,}"
             className={inputCls}
           />
           <textarea

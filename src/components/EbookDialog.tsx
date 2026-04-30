@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Download, Eye, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { EBOOK_DOWNLOAD_PAGE_URL, EBOOK_PDF_URL } from "@/lib/ebookDownload";
+import { downloadEbook, EBOOK_FILE_NAME, EBOOK_PDF_URL } from "@/lib/ebookDownload";
 
 type Props = {
   trigger: React.ReactNode;
@@ -28,10 +28,9 @@ const EbookDialog = ({ trigger }: Props) => {
           </div>
           <div className="flex items-center gap-3">
             <a
-              href={EBOOK_DOWNLOAD_PAGE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(event) => event.stopPropagation()}
+              href={EBOOK_PDF_URL}
+              download={EBOOK_FILE_NAME}
+              onClick={downloadEbook}
               className="btn-pill !py-2 !px-4 text-xs uppercase tracking-[0.2em]"
             >
               <Download className="w-3.5 h-3.5" />
@@ -64,7 +63,7 @@ const EbookDialog = ({ trigger }: Props) => {
                     Twoja przeglądarka nie wspiera podglądu PDF w oknie.
                     Pobierz plik, aby zobaczyć Czarny Zeszyt.
                   </p>
-                  <a href={EBOOK_DOWNLOAD_PAGE_URL} target="_blank" rel="noopener noreferrer" className="btn-pill">
+                  <a href={EBOOK_PDF_URL} download={EBOOK_FILE_NAME} onClick={downloadEbook} className="btn-pill">
                     <Download className="w-4 h-4" /> Pobierz PDF
                   </a>
                 </div>
@@ -87,10 +86,9 @@ export const EbookActions = () => (
       }
     />
     <a
-      href={EBOOK_DOWNLOAD_PAGE_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={(event) => event.stopPropagation()}
+      href={EBOOK_PDF_URL}
+      download={EBOOK_FILE_NAME}
+      onClick={downloadEbook}
       className="btn-pill !py-2 !px-4 text-[10px] uppercase tracking-[0.25em]"
     >
       <Download className="w-3 h-3" /> Pobierz

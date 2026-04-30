@@ -54,10 +54,10 @@ const Footer = ({
   tag: string;
   action?: React.ReactNode;
 }) => (
-  <div className="p-6 flex items-center justify-between gap-3">
+  <div className="p-6 flex items-center justify-between gap-3 min-h-[92px]">
     <div className="min-w-0 flex-1">
-      <h3 className="text-white font-light text-base leading-tight">{title}</h3>
-      <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 mt-1.5 font-light">
+      <h3 className="text-white font-light text-base leading-tight line-clamp-1">{title}</h3>
+      <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 mt-1.5 font-light line-clamp-1">
         {tag}
       </p>
     </div>
@@ -118,10 +118,10 @@ const Portfolio = () => {
               <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1),transparent_60%)]" />
               <EbookMockup />
             </a>
-            <div className="p-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="p-6 flex items-center justify-between gap-3 min-h-[92px]">
               <div className="min-w-0 flex-1">
-                <h3 className="text-white font-light text-base leading-tight">Czarny Zeszyt</h3>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 mt-1.5 font-light">
+                <h3 className="text-white font-light text-base leading-tight line-clamp-1">Czarny Zeszyt</h3>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 mt-1.5 font-light line-clamp-1">
                   E-book · Premium
                 </p>
               </div>
@@ -152,10 +152,10 @@ const Portfolio = () => {
               <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_70%_70%,rgba(255,255,255,0.08),transparent_60%)]" />
               <InstagramMockup />
             </div>
-            <div className="p-6 flex items-center justify-between gap-3">
+            <div className="p-6 flex items-center justify-between gap-3 min-h-[92px]">
               <div className="min-w-0 flex-1">
-                <h3 className="text-white font-light text-base leading-tight">Ink &amp; Blade Academy</h3>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 mt-1.5 font-light">
+                <h3 className="text-white font-light text-base leading-tight line-clamp-1">Ink &amp; Blade Academy</h3>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 mt-1.5 font-light line-clamp-1">
                   SMM · System
                 </p>
               </div>

@@ -1,9 +1,29 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Download, Eye, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const PDF_URL = "/ebook/czarny-zeszyt.pdf";
+
+const downloadPdf = async (e: React.MouseEvent) => {
+  e.preventDefault();
+  e.stopPropagation();
+  try {
+    const res = await fetch(PDF_URL);
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Czarny-Zeszyt.pdf";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  } catch {
+    window.open(PDF_URL, "_blank");
+  }
+};
 
 type Props = {
   trigger: React.ReactNode;
@@ -16,6 +36,10 @@ const EbookDialog = ({ trigger }: Props) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="max-w-5xl w-[95vw] h-[90vh] p-0 bg-black border border-white/10 rounded-2xl overflow-hidden flex flex-col">
+        <VisuallyHidden>
+          <DialogTitle>Czarny Zeszyt — podgląd e-booka</DialogTitle>
+          <DialogDescription>Podgląd PDF z możliwością pobrania.</DialogDescription>
+        </VisuallyHidden>
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 shrink-0">
           <div>
             <p className="text-[10px] tracking-[0.4em] uppercase text-white/40 font-light">
@@ -26,14 +50,14 @@ const EbookDialog = ({ trigger }: Props) => {
             </h3>
           </div>
           <div className="flex items-center gap-3">
-            <a
-              href={PDF_URL}
-              download="Czarny-Zeszyt.pdf"
+            <button
+              type="button"
+              onClick={downloadPdf}
               className="btn-pill !py-2 !px-4 text-xs uppercase tracking-[0.2em]"
             >
               <Download className="w-3.5 h-3.5" />
               Pobierz
-            </a>
+            </button>
             <button
               aria-label="Zamknij"
               onClick={() => setOpen(false)}
@@ -61,13 +85,9 @@ const EbookDialog = ({ trigger }: Props) => {
                     Twoja przeglądarka nie wspiera podglądu PDF w oknie.
                     Pobierz plik, aby zobaczyć Czarny Zeszyt.
                   </p>
-                  <a
-                    href={PDF_URL}
-                    download="Czarny-Zeszyt.pdf"
-                    className="btn-pill"
-                  >
+                  <button type="button" onClick={downloadPdf} className="btn-pill">
                     <Download className="w-4 h-4" /> Pobierz PDF
-                  </a>
+                  </button>
                 </div>
               </motion.object>
             )}
@@ -87,14 +107,13 @@ export const EbookActions = () => (
         </button>
       }
     />
-    <a
-      href={PDF_URL}
-      download="Czarny-Zeszyt.pdf"
-      onClick={(e) => e.stopPropagation()}
+    <button
+      type="button"
+      onClick={downloadPdf}
       className="btn-pill !py-2 !px-4 text-[10px] uppercase tracking-[0.25em]"
     >
       <Download className="w-3 h-3" /> Pobierz
-    </a>
+    </button>
   </div>
 );
 

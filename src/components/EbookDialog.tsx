@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Download, Eye, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { EBOOK_PDF_URL, downloadEbook } from "@/lib/ebookDownload";
+import { EBOOK_DOWNLOAD_PAGE_URL, EBOOK_PDF_URL } from "@/lib/ebookDownload";
 
 type Props = {
   trigger: React.ReactNode;
@@ -27,14 +27,16 @@ const EbookDialog = ({ trigger }: Props) => {
             </h3>
           </div>
           <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={downloadEbook}
+            <a
+              href={EBOOK_DOWNLOAD_PAGE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(event) => event.stopPropagation()}
               className="btn-pill !py-2 !px-4 text-xs uppercase tracking-[0.2em]"
             >
               <Download className="w-3.5 h-3.5" />
               Pobierz
-            </button>
+            </a>
             <button
               aria-label="Zamknij"
               onClick={() => setOpen(false)}
@@ -62,9 +64,9 @@ const EbookDialog = ({ trigger }: Props) => {
                     Twoja przeglądarka nie wspiera podglądu PDF w oknie.
                     Pobierz plik, aby zobaczyć Czarny Zeszyt.
                   </p>
-                  <button type="button" onClick={downloadEbook} className="btn-pill">
+                  <a href={EBOOK_DOWNLOAD_PAGE_URL} target="_blank" rel="noopener noreferrer" className="btn-pill">
                     <Download className="w-4 h-4" /> Pobierz PDF
-                  </button>
+                  </a>
                 </div>
               </motion.object>
             )}
@@ -84,13 +86,15 @@ export const EbookActions = () => (
         </button>
       }
     />
-    <button
-      type="button"
-      onClick={downloadEbook}
+    <a
+      href={EBOOK_DOWNLOAD_PAGE_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(event) => event.stopPropagation()}
       className="btn-pill !py-2 !px-4 text-[10px] uppercase tracking-[0.25em]"
     >
       <Download className="w-3 h-3" /> Pobierz
-    </button>
+    </a>
   </div>
 );
 

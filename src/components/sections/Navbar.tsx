@@ -5,26 +5,22 @@ const Navbar = () => {
     <motion.nav
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="fixed top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-5xl z-50 rounded-full bg-[#09090B]/80 backdrop-blur-md border border-white/10 px-4 sm:px-6 py-3 flex justify-between items-center gap-3"
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="fixed top-6 left-1/2 -translate-x-1/2 w-[94%] max-w-6xl z-50 rounded-full bg-black/40 backdrop-blur-xl border border-white/10 px-6 py-3 flex justify-between items-center"
     >
-      <a href="#top" className="text-sm sm:text-base font-bold text-white glow-turquoise whitespace-nowrap">
-        FlowPilot <span className="text-[#00E5FF]">AI</span> Lab
+      <a href="#top" className="text-sm font-light tracking-[0.25em] text-white uppercase">
+        FlowPilot<span className="text-white/40"> · </span>AI Lab
       </a>
 
-      <div className="hidden sm:flex items-center gap-2 bg-[#FF5D01]/10 text-[#FF5D01] border border-[#FF5D01]/30 rounded-full px-3 py-1 text-xs font-semibold tracking-wider">
-        <span className="relative flex h-2 w-2">
-          <span className="absolute inline-flex h-full w-full rounded-full bg-[#FF5D01] opacity-75 pulse-dot"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF5D01]"></span>
-        </span>
-        STATUS: ONLINE
+      <div className="hidden md:flex items-center gap-8 text-xs uppercase tracking-[0.2em] text-white/50 font-light">
+        <a href="#stats" className="hover:text-white transition-colors">Liczby</a>
+        <a href="#trust" className="hover:text-white transition-colors">Zaufanie</a>
+        <a href="#plan" className="hover:text-white transition-colors">Plan</a>
+        <a href="#pricing" className="hover:text-white transition-colors">Pakiety</a>
       </div>
 
-      <a
-        href="#kontakt"
-        className="bg-[#FF5D01] text-white text-xs sm:text-sm font-semibold rounded-full px-3 sm:px-5 py-2 hover:scale-105 transition-transform whitespace-nowrap"
-      >
-        Rozpocznij Projekt
+      <a href="#kontakt" className="btn-pill !py-2 !px-5 text-xs uppercase tracking-[0.2em]">
+        Kontakt
       </a>
     </motion.nav>
   );

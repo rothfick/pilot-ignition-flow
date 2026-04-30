@@ -1,42 +1,42 @@
 import { motion } from "framer-motion";
 
 const inputCls =
-  "w-full bg-white/5 border border-white/10 rounded-xl p-4 focus:border-[#00E5FF] focus:ring-1 focus:ring-[#00E5FF] text-white outline-none transition-all placeholder:text-[#94A3B8]/70";
+  "w-full bg-transparent border-b border-white/15 py-4 px-0 text-white font-light placeholder:text-white/30 focus:border-white outline-none transition-colors";
 
 const LeadForm = () => {
   return (
-    <section id="kontakt" className="bg-black py-24 sm:py-32 px-6 border-t border-white/5">
+    <section
+      id="kontakt"
+      className="relative z-10 py-32 px-6 border-t border-white/5"
+    >
       <div className="max-w-2xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
         >
-          <div className="inline-block border border-[#FF5D01]/30 text-[#FF5D01] bg-[#FF5D01]/10 rounded-full px-4 py-1.5 text-xs font-semibold tracking-widest uppercase mb-6">
-            Wolne sloty: 2/5
-          </div>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold -tracking-[0.04em] text-white mb-4">
-            Wstąp do <span className="text-gradient-brand">Labu</span>.
-          </h2>
-          <p className="text-[#94A3B8] max-w-md mx-auto">
-            Filtrujemy zgłoszenia. Odpowiadamy w &lt; 24h tylko jeśli pasujemy.
+          <p className="text-xs uppercase tracking-[0.4em] text-white/40 font-light mb-6">
+            Kontakt
           </p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-light -tracking-[0.03em] text-white">
+            Zainicjuj swoje <span className="italic text-white/70">wdrożenie</span>.
+          </h2>
         </motion.div>
 
         <motion.form
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, delay: 0.1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.1 }}
           action="https://formspree.io/f/YOUR_ENDPOINT_HERE"
           method="POST"
-          className="space-y-4"
+          className="space-y-2"
         >
           <input
             name="name"
-            placeholder="Imię / Pseudonim"
+            placeholder="Imię i nazwisko"
             required
             maxLength={100}
             className={inputCls}
@@ -44,33 +44,35 @@ const LeadForm = () => {
           <input
             name="email"
             type="email"
-            placeholder="Twój najlepszy E-mail"
+            placeholder="E-mail"
             required
             maxLength={255}
             className={inputCls}
           />
           <textarea
             name="message"
-            placeholder="Opisz swój problem (co mamy zautomatyzować?)"
+            placeholder="Opisz swój projekt"
             required
             rows={4}
             maxLength={1000}
             className={`${inputCls} resize-none`}
           />
-          <button
-            type="submit"
-            className="bg-gradient-to-r from-[#FF5D01] to-[#00E5FF] text-white font-bold w-full uppercase tracking-widest rounded-xl py-4 hover:opacity-90 transition-opacity"
-          >
-            Inicjuj Wdrożenie
-          </button>
-          <p className="text-center text-xs text-[#94A3B8]/70 pt-2">
-            Twoje dane są szyfrowane. Zero spamu.
+          <div className="pt-10">
+            <button
+              type="submit"
+              className="btn-pill w-full !py-4 uppercase tracking-[0.3em] text-xs"
+            >
+              Zainicjuj wdrożenie
+            </button>
+          </div>
+          <p className="text-center text-xs text-white/30 pt-6 font-light tracking-wide">
+            Odpowiadamy w ciągu 24 godzin.
           </p>
         </motion.form>
       </div>
 
-      <footer className="mt-24 text-center text-xs text-[#94A3B8]/60 tracking-widest uppercase">
-        © {new Date().getFullYear()} FlowPilot AI Lab · Made at warp speed
+      <footer className="mt-32 text-center text-xs text-white/30 tracking-[0.3em] uppercase font-light">
+        © {new Date().getFullYear()} FlowPilot AI Lab
       </footer>
     </section>
   );

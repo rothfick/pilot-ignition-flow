@@ -42,6 +42,7 @@ Deno.serve(async (req) => {
 
   const supabaseUrl = Deno.env.get('SUPABASE_URL')
   const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+  const recaptchaSecret = Deno.env.get('RECAPTCHA_SECRET_KEY')
 
   if (!supabaseUrl || !supabaseServiceKey) {
     console.error('Missing required environment variables')
@@ -60,12 +61,14 @@ Deno.serve(async (req) => {
   let idempotencyKey: string
   let messageId: string
   let templateData: Record<string, any> = {}
+  let captchaToken: string = ''
   try {
     const body = await req.json()
     templateName = body.templateName || body.template_name
     recipientEmail = body.recipientEmail || body.recipient_email
     messageId = crypto.randomUUID()
     idempotencyKey = body.idempotencyKey || body.idempotency_key || messageId
+    captchaToken = body.captchaToken || body.captcha_token || ''
     if (body.templateData && typeof body.templateData === 'object') {
       templateData = body.templateData
     }
@@ -87,6 +90,67 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     )
+  }
+
+  // CAPTCHA verification — required for the public contact form template.
+  // Other templates (e.g. system-triggered) skip this check.
+  const CAPTCHA_REQUIRED_TEMPLATES = new Set(['contact-form-notification'])
+  if (CAPTCHA_REQUIRED_TEMPLATES.has(templateName)) {
+    if (!recaptchaSecret) {
+      console.error('RECAPTCHA_SECRET_KEY not configured')
+      return new Response(
+        JSON.stringify({ error: 'Captcha verification unavailable' }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      )
+    }
+    if (!captchaToken) {
+      return new Response(
+        JSON.stringify({ error: 'Captcha token is required' }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      )
+    }
+    try {
+      const verifyParams = new URLSearchParams({
+        secret: recaptchaSecret,
+        response: captchaToken,
+      })
+      const verifyRes = await fetch(
+        'https://www.google.com/recaptcha/api/siteverify',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: verifyParams.toString(),
+        }
+      )
+      const verifyJson = await verifyRes.json()
+      if (!verifyJson.success) {
+        console.warn('Captcha verification failed', {
+          errors: verifyJson['error-codes'],
+        })
+        return new Response(
+          JSON.stringify({ error: 'Captcha verification failed' }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        )
+      }
+    } catch (err) {
+      console.error('Captcha verification error', err)
+      return new Response(
+        JSON.stringify({ error: 'Captcha verification error' }),
+        {
+          status: 502,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      )
+    }
   }
 
   // 1. Look up template from registry (early — needed to resolve recipient)

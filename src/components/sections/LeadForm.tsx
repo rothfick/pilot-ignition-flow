@@ -1,9 +1,66 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 const inputCls =
   "w-full bg-transparent border-b border-white/15 py-4 px-0 text-white font-light placeholder:text-white/30 focus:border-white outline-none transition-colors";
 
 const LeadForm = () => {
+  const [submitting, setSubmitting] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (submitting) return;
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    const name = String(fd.get("name") || "").trim();
+    const email = String(fd.get("email") || "").trim();
+    const message = String(fd.get("message") || "").trim();
+
+    if (!name || !email || !message) return;
+
+    setSubmitting(true);
+    try {
+      const id =
+        typeof crypto !== "undefined" && "randomUUID" in crypto
+          ? crypto.randomUUID()
+          : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+      const { error } = await supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "contact-form-notification",
+          idempotencyKey: `contact-form-${id}`,
+          templateData: {
+            name,
+            email,
+            message,
+            submittedAt: new Date().toLocaleString("pl-PL"),
+          },
+        },
+      });
+
+      if (error) throw error;
+
+      setSent(true);
+      form.reset();
+      toast({
+        title: "Wiadomość wysłana",
+        description: "Odezwiemy się w ciągu 24 godzin.",
+      });
+    } catch (err) {
+      console.error("Contact form error:", err);
+      toast({
+        title: "Coś poszło nie tak",
+        description: "Spróbuj ponownie za chwilę.",
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <section
       id="kontakt"
@@ -30,8 +87,7 @@ const LeadForm = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          action="https://formspree.io/f/YOUR_ENDPOINT_HERE"
-          method="POST"
+          onSubmit={onSubmit}
           className="space-y-2"
         >
           <input
@@ -60,9 +116,10 @@ const LeadForm = () => {
           <div className="pt-10">
             <button
               type="submit"
-              className="btn-pill w-full !py-4 uppercase tracking-[0.3em] text-xs"
+              disabled={submitting}
+              className="btn-pill w-full !py-4 uppercase tracking-[0.3em] text-xs disabled:opacity-50"
             >
-              Zainicjuj wdrożenie
+              {submitting ? "Wysyłanie…" : sent ? "Wysłano ✓" : "Zainicjuj wdrożenie"}
             </button>
           </div>
           <p className="text-center text-xs text-white/30 pt-6 font-light tracking-wide">

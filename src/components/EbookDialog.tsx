@@ -15,8 +15,8 @@ const EbookDialog = ({ trigger }: Props) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="max-w-5xl w-[95vw] h-[90vh] p-0 bg-black border border-white/10 rounded-2xl overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
+      <DialogContent className="max-w-5xl w-[95vw] h-[90vh] p-0 bg-black border border-white/10 rounded-2xl overflow-hidden flex flex-col">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 shrink-0">
           <div>
             <p className="text-[10px] tracking-[0.4em] uppercase text-white/40 font-light">
               FlowPilot · E-book
@@ -43,19 +43,36 @@ const EbookDialog = ({ trigger }: Props) => {
             </button>
           </div>
         </div>
-        <AnimatePresence>
-          {open && (
-            <motion.iframe
-              key="pdf"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              src={`${PDF_URL}#view=FitH`}
-              title="Czarny Zeszyt — podgląd"
-              className="flex-1 w-full h-full bg-zinc-900"
-            />
-          )}
-        </AnimatePresence>
+        <div className="flex-1 min-h-0 bg-zinc-900 relative">
+          <AnimatePresence>
+            {open && (
+              <motion.object
+                key="pdf"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4 }}
+                data={`${PDF_URL}#view=FitH&toolbar=1`}
+                type="application/pdf"
+                aria-label="Czarny Zeszyt — podgląd"
+                className="absolute inset-0 w-full h-full"
+              >
+                <div className="flex flex-col items-center justify-center h-full text-center px-6 gap-4">
+                  <p className="text-white/60 font-light text-sm max-w-md">
+                    Twoja przeglądarka nie wspiera podglądu PDF w oknie.
+                    Pobierz plik, aby zobaczyć Czarny Zeszyt.
+                  </p>
+                  <a
+                    href={PDF_URL}
+                    download="Czarny-Zeszyt.pdf"
+                    className="btn-pill"
+                  >
+                    <Download className="w-4 h-4" /> Pobierz PDF
+                  </a>
+                </div>
+              </motion.object>
+            )}
+          </AnimatePresence>
+        </div>
       </DialogContent>
     </Dialog>
   );

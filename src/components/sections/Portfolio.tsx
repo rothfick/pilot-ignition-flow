@@ -5,7 +5,7 @@ import PhoneMockup from "@/components/portfolio/PhoneMockup";
 import EbookMockup from "@/components/portfolio/EbookMockup";
 import InstagramMockup from "@/components/portfolio/InstagramMockup";
 import EbookDialog from "@/components/EbookDialog";
-import { EBOOK_DOWNLOAD_PAGE_URL } from "@/lib/ebookDownload";
+import { downloadEbook, EBOOK_FILE_NAME, EBOOK_PDF_URL } from "@/lib/ebookDownload";
 
 const baseCard =
   "group relative rounded-2xl overflow-hidden border border-white/[0.05] bg-white/[0.02] backdrop-blur-md transition-all";
@@ -105,14 +105,16 @@ const Portfolio = () => {
 
           {/* Czarny Zeszyt */}
           <Card delay={0.16} asDiv>
-            <EbookDialog
-              trigger={
-                <button className="block w-full text-left aspect-[4/3] relative cursor-pointer" style={{ background: "linear-gradient(160deg, #0a0a0a 0%, #18181b 100%)" }}>
-                  <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1),transparent_60%)]" />
-                  <EbookMockup />
-                </button>
-              }
-            />
+            <a
+              href={EBOOK_PDF_URL}
+              download={EBOOK_FILE_NAME}
+              onClick={downloadEbook}
+              className="block w-full text-left aspect-[4/3] relative cursor-pointer"
+              style={{ background: "linear-gradient(160deg, #0a0a0a 0%, #18181b 100%)" }}
+            >
+              <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1),transparent_60%)]" />
+              <EbookMockup />
+            </a>
             <div className="p-6 flex items-center justify-between gap-4">
               <div className="min-w-0">
                 <h3 className="text-white font-light text-lg truncate">Czarny Zeszyt</h3>
@@ -129,10 +131,9 @@ const Portfolio = () => {
                   }
                 />
                 <a
-                  href={EBOOK_DOWNLOAD_PAGE_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(event) => event.stopPropagation()}
+                  href={EBOOK_PDF_URL}
+                  download={EBOOK_FILE_NAME}
+                  onClick={downloadEbook}
                   className="btn-pill !py-2 !px-3 text-[10px] uppercase tracking-[0.2em]"
                 >
                   <Download className="w-3 h-3" /> Pobierz

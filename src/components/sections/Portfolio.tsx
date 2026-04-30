@@ -88,15 +88,18 @@ const Portfolio = () => {
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-          {/* Inkblade */}
-          <Card delay={0} href="https://www.inkblade.site/">
-            <div className="aspect-[4/3] w-full relative bg-zinc-950">
-              <InkbladeMockup />
+          {/* 1. FlowPilot Reel — HOOK (auto-play wideo) */}
+          <Card delay={0} href="/reel">
+            <div
+              className="aspect-[4/3] w-full relative"
+              style={{ background: "linear-gradient(135deg, #0a0a0a 0%, #1a1410 100%)" }}
+            >
+              <ReelMockup />
             </div>
-            <Footer title="Ink & Blade Academy" tag="WWW · Identyfikacja" />
+            <Footer title="FlowPilot Reel" tag="Wideo · Reel 2026" />
           </Card>
 
-          {/* FlowPilot Command */}
+          {/* 2. FlowPilot Command — GŁÓWNE CTA */}
           <Card delay={0.08} href="/app">
             <div className="aspect-[4/3] w-full relative" style={{ background: "linear-gradient(135deg, #18181b 0%, #000 100%)" }}>
               <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_70%_30%,rgba(255,255,255,0.08),transparent_60%)]" />
@@ -105,8 +108,48 @@ const Portfolio = () => {
             <Footer title="FlowPilot Command" tag="PWA · Aplikacja" />
           </Card>
 
-          {/* Czarny Zeszyt */}
-          <Card delay={0.16} asDiv>
+          {/* 3. AI Headshot Pro — wow-tech AI */}
+          <Card delay={0.16} href="/headshot">
+            <div
+              className="aspect-[4/3] w-full relative"
+              style={{ background: "linear-gradient(135deg, #0a0a0a 0%, #1a1410 100%)" }}
+            >
+              <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_70%,rgba(245,158,11,0.18),transparent_60%)]" />
+              <HeadshotMockup />
+            </div>
+            <Footer title="AI Headshot Pro" tag="AI · Generative" />
+          </Card>
+
+          {/* 4. Ink & Blade Academy — dowód kliencki (WWW) */}
+          <Card delay={0.24} href="https://www.inkblade.site/">
+            <div className="aspect-[4/3] w-full relative bg-zinc-950">
+              <InkbladeMockup />
+            </div>
+            <Footer title="Ink & Blade Academy" tag="WWW · Identyfikacja" />
+          </Card>
+
+          {/* 5. Ink & Blade SMM — dowód kliencki (Instagram) */}
+          <Card delay={0.32} href="https://www.instagram.com/inkandblade.academy/">
+            <div className="aspect-[4/3] w-full relative" style={{ background: "linear-gradient(135deg, #0f0f10 0%, #1f1f22 100%)" }}>
+              <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_70%_70%,rgba(255,255,255,0.08),transparent_60%)]" />
+              <InstagramMockup />
+            </div>
+            <div className="p-6 flex items-center justify-between gap-3 min-h-[92px]">
+              <div className="min-w-0 flex-1">
+                <h3 className="text-white font-light text-base leading-tight line-clamp-1">Ink &amp; Blade Academy</h3>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 mt-1.5 font-light line-clamp-1">
+                  SMM · System
+                </p>
+              </div>
+              <div className="flex items-center gap-2 shrink-0 text-white/60 group-hover:text-white transition-colors">
+                <Instagram className="w-4 h-4" strokeWidth={1.5} />
+                <ArrowUpRight className="w-5 h-5 group-hover:rotate-45 transition-transform" strokeWidth={1.5} />
+              </div>
+            </div>
+          </Card>
+
+          {/* 6. Czarny Zeszyt — lead magnet (soft CTA) */}
+          <Card delay={0.4} asDiv>
             <a
               href={EBOOK_DOWNLOAD_PAGE_URL}
               target="_blank"
@@ -144,49 +187,6 @@ const Portfolio = () => {
                 </a>
               </div>
             </div>
-          </Card>
-
-          {/* Noir Automation - Instagram */}
-          <Card delay={0.24} href="https://www.instagram.com/inkandblade.academy/">
-            <div className="aspect-[4/3] w-full relative" style={{ background: "linear-gradient(135deg, #0f0f10 0%, #1f1f22 100%)" }}>
-              <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_70%_70%,rgba(255,255,255,0.08),transparent_60%)]" />
-              <InstagramMockup />
-            </div>
-            <div className="p-6 flex items-center justify-between gap-3 min-h-[92px]">
-              <div className="min-w-0 flex-1">
-                <h3 className="text-white font-light text-base leading-tight line-clamp-1">Ink &amp; Blade Academy</h3>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 mt-1.5 font-light line-clamp-1">
-                  SMM · System
-                </p>
-              </div>
-              <div className="flex items-center gap-2 shrink-0 text-white/60 group-hover:text-white transition-colors">
-                <Instagram className="w-4 h-4" strokeWidth={1.5} />
-                <ArrowUpRight className="w-5 h-5 group-hover:rotate-45 transition-transform" strokeWidth={1.5} />
-              </div>
-            </div>
-          </Card>
-
-          {/* AI Headshot Pro */}
-          <Card delay={0.32} href="/headshot">
-            <div
-              className="aspect-[4/3] w-full relative"
-              style={{ background: "linear-gradient(135deg, #0a0a0a 0%, #1a1410 100%)" }}
-            >
-              <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_70%,rgba(245,158,11,0.18),transparent_60%)]" />
-              <HeadshotMockup />
-            </div>
-            <Footer title="AI Headshot Pro" tag="AI · Generative" />
-          </Card>
-
-          {/* FlowPilot Reel — Wideo */}
-          <Card delay={0.4} href="/reel">
-            <div
-              className="aspect-[4/3] w-full relative"
-              style={{ background: "linear-gradient(135deg, #0a0a0a 0%, #1a1410 100%)" }}
-            >
-              <ReelMockup />
-            </div>
-            <Footer title="FlowPilot Reel" tag="Wideo · Reel 2026" />
           </Card>
         </div>
       </div>

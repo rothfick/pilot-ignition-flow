@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
-const RECAPTCHA_SITE_KEY = "6LejBNIsAAAAAMcWPrztQQwWdUEQNklT3-U_HCcs";
+const RECAPTCHA_SITE_KEY = "6LcOCNIsAAAAAOCMZRSQuH5esOARkTVr4T39f_fs";
 
 declare global {
   interface Window {

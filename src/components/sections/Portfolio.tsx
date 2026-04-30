@@ -87,7 +87,7 @@ const Portfolio = () => {
           Cisza, precyzja, rezultat
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
           {/* Inkblade */}
           <Card delay={0} href="https://www.inkblade.site/">
             <div className="aspect-[4/3] w-full relative bg-zinc-950">

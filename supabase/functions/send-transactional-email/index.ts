@@ -182,6 +182,80 @@ Deno.serve(async (req) => {
         }
       )
     }
+
+    // Rate limiting — block excessive submissions per IP and per email.
+    // Limits: 5 per IP / 10 min, 3 per email / 60 min, 30 global / 10 min.
+    const ipAddress =
+      req.headers.get('cf-connecting-ip') ||
+      req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+      req.headers.get('x-real-ip') ||
+      null
+
+    const rlSupabase = createClient(supabaseUrl, supabaseServiceKey)
+    const submitterEmail = (templateData.email as string).toLowerCase()
+    const now = Date.now()
+    const tenMinAgo = new Date(now - 10 * 60 * 1000).toISOString()
+    const sixtyMinAgo = new Date(now - 60 * 60 * 1000).toISOString()
+
+    try {
+      const checks = await Promise.all([
+        ipAddress
+          ? rlSupabase
+              .from('email_rate_limit_attempts')
+              .select('id', { count: 'exact', head: true })
+              .eq('ip_address', ipAddress)
+              .eq('template_name', templateName)
+              .gte('created_at', tenMinAgo)
+          : Promise.resolve({ count: 0, error: null } as any),
+        rlSupabase
+          .from('email_rate_limit_attempts')
+          .select('id', { count: 'exact', head: true })
+          .eq('email', submitterEmail)
+          .eq('template_name', templateName)
+          .gte('created_at', sixtyMinAgo),
+        rlSupabase
+          .from('email_rate_limit_attempts')
+          .select('id', { count: 'exact', head: true })
+          .eq('template_name', templateName)
+          .gte('created_at', tenMinAgo),
+      ])
+
+      const ipCount = checks[0].count ?? 0
+      const emailCount = checks[1].count ?? 0
+      const globalCount = checks[2].count ?? 0
+
+      if (ipCount >= 5 || emailCount >= 3 || globalCount >= 30) {
+        console.warn('Rate limit exceeded', {
+          ipAddress,
+          submitterEmail,
+          ipCount,
+          emailCount,
+          globalCount,
+        })
+        return new Response(
+          JSON.stringify({
+            error: 'Too many requests. Please try again later.',
+          }),
+          {
+            status: 429,
+            headers: {
+              ...corsHeaders,
+              'Content-Type': 'application/json',
+              'Retry-After': '600',
+            },
+          }
+        )
+      }
+
+      // Record this attempt (fire-and-forget — don't block on failure)
+      await rlSupabase.from('email_rate_limit_attempts').insert({
+        ip_address: ipAddress,
+        email: submitterEmail,
+        template_name: templateName,
+      })
+    } catch (err) {
+      console.error('Rate limit check failed — allowing request', err)
+    }
   }
 
   // 1. Look up template from registry (early — needed to resolve recipient)

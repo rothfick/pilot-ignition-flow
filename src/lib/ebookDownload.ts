@@ -12,7 +12,15 @@ type DownloadEvent = {
 };
 
 export const downloadEbook = (event?: DownloadEvent) => {
+  event?.preventDefault?.();
   event?.stopPropagation?.();
 
   if (typeof window === "undefined") return;
+
+  const downloadPageUrl = new URL(EBOOK_DOWNLOAD_PAGE_URL, window.location.origin).toString();
+  const popup = window.open(downloadPageUrl, "_blank", "noopener,noreferrer");
+
+  if (!popup) {
+    window.location.href = EBOOK_DOWNLOAD_PAGE_URL;
+  }
 };
